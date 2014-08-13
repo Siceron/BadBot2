@@ -74,7 +74,7 @@ public class BadBot extends JavaPlugin implements Listener {
 					task.cancel();
 				}
 				this.lastMessage = newMessage;
-				new Task().runTaskLater(plugin, interval * 20); // 20 ticks = 1 seconde si pas de lag
+				new Task().runTaskLater(plugin, interval * 20); // 20 ticks = 1 seconde si pas de lags
 			}
 			else{
 				e.setCancelled(true);
