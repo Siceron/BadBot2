@@ -1,0 +1,14 @@
+author: Siceron
+description: Bad Bot
+main: badbot.main.BadBot
+name: BadBot
+version: 0.1
+
+commands:
+   badbot:
+      description: Commande principale du plugin
+
+permissions:
+   badbot.perm:
+      description: Permet au joueur de spam
+      default: op
