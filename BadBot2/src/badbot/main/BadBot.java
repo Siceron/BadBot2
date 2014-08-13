@@ -17,6 +17,7 @@ public class BadBot extends JavaPlugin implements Listener {
 	public String lastMessage;
 	public int interval;
 	public BukkitTask task;
+	public boolean kick;
 	
 	public BadBot(){
 		plugin = this;
@@ -29,6 +30,7 @@ public class BadBot extends JavaPlugin implements Listener {
 		
 		plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
 		this.interval = getConfig().getInt("interval");
+		this.kick = getConfig().getBoolean("kick");
 		if(interval == 0){
 			interval = 15;
 		}
@@ -50,10 +52,29 @@ public class BadBot extends JavaPlugin implements Listener {
 				else if(args.length == 2){
 					if(p.hasPermission("badbot.perm")){
 						if(args[0].equals("interval")){
-							interval = Integer.valueOf(args[1]);
-							p.sendMessage(ChatColor.RED + "[BadBot] Nouveau intervalle : "+interval);
+							try{
+								interval = Integer.valueOf(args[1]);
+								p.sendMessage(ChatColor.RED + "[BadBot] Nouveau intervalle : "+interval);
+							}
+							catch (NumberFormatException e) {
+								p.sendMessage(ChatColor.RED + "[BadBot] Veuillez entrer un nombre correct");
+							}
 							return true;
 						}
+						else if(args[0].equals("kick")){
+							if(args[1].equals("true") || args[1].equals("false")){
+								kick = Boolean.valueOf(args[1]);
+								p.sendMessage(ChatColor.RED + "[BadBot] Kick : "+kick);
+							}
+							else{
+								p.sendMessage(ChatColor.RED + "[BadBot] Veuillez entrer true ou false");
+							}
+							return true;
+						}
+					}
+					else{
+						p.sendMessage(ChatColor.RED + "[BadBot] Vous n'avez pas les permissions nécessaires");
+						return true;
 					}
 				}
 				else{
@@ -77,8 +98,13 @@ public class BadBot extends JavaPlugin implements Listener {
 				new Task().runTaskLater(plugin, interval * 20); // 20 ticks = 1 seconde si pas de lags
 			}
 			else{
-				e.setCancelled(true);
-				player.sendMessage(ChatColor.RED + "[BadBot] Attendez "+interval+" secondes avant d'envoyer le même message !");
+				if(kick){
+					player.kickPlayer("Spam");
+				}
+				else{
+					e.setCancelled(true);
+					player.sendMessage(ChatColor.RED + "[BadBot] Attendez "+interval+" secondes avant d'envoyer le même message !");
+				}
 			}
 		}
 	}
