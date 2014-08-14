@@ -1,5 +1,6 @@
 package badbot.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,7 @@ public class BadBot extends JavaPlugin implements Listener {
 	public int interval;
 	public BukkitTask task;
 	public boolean kick;
+	public boolean mute;
 	
 	public BadBot(){
 		plugin = this;
@@ -26,7 +28,7 @@ public class BadBot extends JavaPlugin implements Listener {
 	@Override
     public void onEnable(){
 		saveDefaultConfig();
-		getLogger().info("[BadBot] Plugin démarré !");
+		getLogger().info("[BadBot] Plugin : ON !");
 		
 		plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
 		this.interval = getConfig().getInt("interval");
@@ -34,11 +36,12 @@ public class BadBot extends JavaPlugin implements Listener {
 		if(interval == 0){
 			interval = 15;
 		}
+		mute = false;
     }
 	
 	@Override
     public void onDisable(){
-		
+		getLogger().info("[BadBot] Plugin : OFF !");
     }
 	
 	@Override
@@ -48,6 +51,19 @@ public class BadBot extends JavaPlugin implements Listener {
 				Player p = (Player)sender;
 				if(args.length == 0){
 					p.sendMessage(ChatColor.GREEN + "[BadBot] Auteur du plugin : Siceron");
+				}
+				else if(args.length == 1){
+					if(p.hasPermission("badbot.perm")){
+						if(args[0].equals("mute")){
+							mute = !mute;
+							if(mute){
+								Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + sender.getName() + " a mute le chat");
+							}
+							else{
+								Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + sender.getName() + " a unmute le chat");
+							}
+						}
+					}
 				}
 				else if(args.length == 2){
 					if(p.hasPermission("badbot.perm")){
@@ -73,7 +89,7 @@ public class BadBot extends JavaPlugin implements Listener {
 						}
 					}
 					else{
-						p.sendMessage(ChatColor.RED + "[BadBot] Vous n'avez pas les permissions nécessaires");
+						p.sendMessage(ChatColor.RED + "[BadBot] Vous n'avez pas les permissions necessaires");
 						return true;
 					}
 				}
@@ -103,11 +119,24 @@ public class BadBot extends JavaPlugin implements Listener {
 				}
 				else{
 					e.setCancelled(true);
-					player.sendMessage(ChatColor.RED + "[BadBot] Attendez "+interval+" secondes avant d'envoyer le même message !");
+					player.sendMessage(ChatColor.RED + "[BadBot] Attendez "+interval+" secondes avant d'envoyer le meme message !");
 				}
 			}
 		}
 	}
+	
+	@EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+		Player player = event.getPlayer();
+        if (mute) {
+            if (player.hasPermission("badbot.perm")) {
+                event.setCancelled(false);
+            } else {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ChatColor.RED + "[BadBot] Le chat a ete mute");
+            }
+        }
+    }
 	
 	class Task extends BukkitRunnable{
 
