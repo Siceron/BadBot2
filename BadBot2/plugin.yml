@@ -2,13 +2,25 @@ author: Siceron
 description: Bad Bot
 main: badbot.main.BadBot
 name: BadBot
-version: 0.3
+version: 0.4
 
 commands:
    badbot:
       description: Commande principale du plugin
 
 permissions:
-   badbot.perm:
+   badbot.spam:
+      description: Permet au joueur de changer les config du spam
+      default: op
+   badbot.spamperm:
       description: Permet au joueur de spam
+      default: op
+   badbot.blacklist:
+      description: Permet au joueur modifier la blacklist
+      default: op
+   badbot.mute:
+      description: Permet au joueur de mute le chat
+      default: op
+   badbot.muteperm:
+      description: Permet au joueur de parler lors d'un mute
       default: op
