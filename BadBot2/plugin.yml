@@ -6,7 +6,17 @@ version: 0.4
 
 commands:
    badbot:
-      description: Commande principale du plugin
+      description: Nom de l'auteur
+   badbot interval [secondes]:
+      description: change l'intervalle entre chaque spam
+   badbot kick [true/false]:
+      description: change si le joueur est kick ou non pour spam
+   badbot mute:
+      description: mute/unmute le chat general
+   badbot addblacklist [mot]:
+      description: ajoute un mot a la blacklist
+   badbot addblacklist [mot]:
+      description: retire un mot de la blacklist
 
 permissions:
    badbot.spam:

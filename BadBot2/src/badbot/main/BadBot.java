@@ -40,7 +40,7 @@ public class BadBot extends JavaPlugin implements Listener {
 			interval = 15;
 		}
 		mute = false;
-		this.blackList = getConfig().getStringList("blacklist");
+		blackList = getConfig().getStringList("blacklist");
 	}
 
 	@Override
@@ -120,6 +120,8 @@ public class BadBot extends JavaPlugin implements Listener {
 							}
 							else{
 								addString(args[1], "blacklist");
+								blackList = getConfig().getStringList("blacklist");
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le mot "+args[1]+" a ete ajoute a la liste");
 							}
 						}
 						else{
@@ -131,6 +133,8 @@ public class BadBot extends JavaPlugin implements Listener {
 						if(p.hasPermission("badbot.blacklist")){
 							if(blackList.contains(args[1])){
 								removeString(args[1], "blacklist");
+								blackList = getConfig().getStringList("blacklist");
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le mot "+args[1]+" a ete supprime de la liste");
 							}
 							else{
 								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le mot n'est pas dans la liste");
