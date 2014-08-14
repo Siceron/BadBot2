@@ -9,3 +9,5 @@ Plugin Bukkit de modération pour [Hovercraft] (http://www.hovercraft-servers.co
 	* la fonction /badbot kick [boolean] change si le joueur est kick ou non
 2. v0.2 :
 	* La fonction /badbot mute empêche tous les joueurs du serveur de parler (jusqu'à ce qu'elle soit réactivée)
+3. v0.3 :
+	* Le bot kick le joueur qui envoie un mot de la blacklist (language)

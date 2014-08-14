@@ -1,5 +1,7 @@
 package badbot.main;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,6 +22,7 @@ public class BadBot extends JavaPlugin implements Listener {
 	public BukkitTask task;
 	public boolean kick;
 	public boolean mute;
+	public List<String> blackList;
 	
 	public BadBot(){
 		plugin = this;
@@ -37,6 +40,7 @@ public class BadBot extends JavaPlugin implements Listener {
 			interval = 15;
 		}
 		mute = false;
+		this.blackList = getConfig().getStringList("blacklist");
     }
 	
 	@Override
@@ -106,6 +110,21 @@ public class BadBot extends JavaPlugin implements Listener {
 		Player player = e.getPlayer();
 		if(!player.hasPermission("badbot.perm")){
 			String newMessage = e.getMessage().toString();
+			
+			// Gestion du language
+			if(newMessage != null){
+				String messageTab[] = newMessage.split(" ");
+				for(int i = 0 ; i<messageTab.length ; i++){
+					for(String grosMot : blackList){
+						if((messageTab[i].toLowerCase()).equals(grosMot.toLowerCase())){
+							player.kickPlayer("[BadBot] Language");
+							Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + player.getName() + " kick pour language");
+						}
+					}
+				}
+			}
+			
+			// Gestion du spam
 			if(!newMessage.equalsIgnoreCase(this.lastMessage) || this.lastMessage == null){
 				if(task != null){
 					task.cancel();
@@ -115,7 +134,7 @@ public class BadBot extends JavaPlugin implements Listener {
 			}
 			else{
 				if(kick){
-					player.kickPlayer("Spam");
+					player.kickPlayer("[BadBot] Spam");
 				}
 				else{
 					e.setCancelled(true);

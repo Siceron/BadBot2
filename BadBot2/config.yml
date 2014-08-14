@@ -5,3 +5,9 @@ interval: 15
 
 #Kick
 kick: true
+
+#BlackList
+blacklist: 
+- con
+- connard
+- pute
