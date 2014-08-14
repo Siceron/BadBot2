@@ -2,7 +2,7 @@ author: Siceron
 description: Bad Bot
 main: badbot.main.BadBot
 name: BadBot
-version: 0.1
+version: 0.2
 
 commands:
    badbot:
