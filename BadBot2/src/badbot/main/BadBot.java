@@ -75,6 +75,16 @@ public class BadBot extends JavaPlugin implements Listener {
 							return true;
 						}
 					}
+					else if(args[0].equals("blacklist")){
+						if(p.hasPermission("badbot.blacklist")){
+							p.sendMessage(blackList.toArray(new String[blackList.size()]));
+							return true;
+						}
+						else{
+							p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Vous n'avez pas les permissions necessaires");
+							return true;
+						}
+					}
 					else{
 						p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" La commande /badbot"+args[0]+" n'existe pas");
 						return true;
@@ -206,7 +216,7 @@ public class BadBot extends JavaPlugin implements Listener {
 				event.setCancelled(false);
 			} else {
 				event.setCancelled(true);
-				event.getPlayer().sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le chat a ete mute");
+				event.getPlayer().sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le chat a ete desactive");
 			}
 		}
 	}

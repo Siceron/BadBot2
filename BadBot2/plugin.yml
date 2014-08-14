@@ -13,6 +13,8 @@ commands:
       description: kick pour spam
    badbot mute:
       description: mute/unmute le chat general
+   badbot blacklist:
+      description: affiche la blacklist
    badbot addblacklist [mot]:
       description: ajoute un mot
    badbot removeblacklist [mot]:
