@@ -77,7 +77,9 @@ public class BadBot extends JavaPlugin implements Listener {
 					}
 					else if(args[0].equals("blacklist")){
 						if(p.hasPermission("badbot.blacklist")){
-							p.sendMessage(blackList.toArray(new String[blackList.size()]));
+							for(String mot : blackList){
+								p.sendMessage("- "+mot);
+							}
 							return true;
 						}
 						else{
