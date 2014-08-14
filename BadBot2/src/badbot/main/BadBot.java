@@ -54,17 +54,17 @@ public class BadBot extends JavaPlugin implements Listener {
 			if(sender instanceof Player) {
 				Player p = (Player)sender;
 				if(args.length == 0){
-					p.sendMessage(ChatColor.GREEN + "[BadBot] Auteur du plugin : Siceron");
+					p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.GREEN +" Auteur du plugin : Siceron");
 				}
 				else if(args.length == 1){
 					if(p.hasPermission("badbot.perm")){
 						if(args[0].equals("mute")){
 							mute = !mute;
 							if(mute){
-								Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + sender.getName() + " a mute le chat");
+								Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "[BadBot] " + ChatColor.RED + sender.getName() + " a mute le chat");
 							}
 							else{
-								Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + sender.getName() + " a unmute le chat");
+								Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "[BadBot] " + ChatColor.RED + sender.getName() + " a unmute le chat");
 							}
 						}
 					}
@@ -74,26 +74,26 @@ public class BadBot extends JavaPlugin implements Listener {
 						if(args[0].equals("interval")){
 							try{
 								interval = Integer.valueOf(args[1]);
-								p.sendMessage(ChatColor.RED + "[BadBot] Nouveau intervalle : "+interval);
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED + " Nouveau intervalle : "+interval);
 							}
 							catch (NumberFormatException e) {
-								p.sendMessage(ChatColor.RED + "[BadBot] Veuillez entrer un nombre correct");
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Veuillez entrer un nombre correct");
 							}
 							return true;
 						}
 						else if(args[0].equals("kick")){
 							if(args[1].equals("true") || args[1].equals("false")){
 								kick = Boolean.valueOf(args[1]);
-								p.sendMessage(ChatColor.RED + "[BadBot] Kick : "+kick);
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Kick : "+kick);
 							}
 							else{
-								p.sendMessage(ChatColor.RED + "[BadBot] Veuillez entrer true ou false");
+								p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Veuillez entrer true ou false");
 							}
 							return true;
 						}
 					}
 					else{
-						p.sendMessage(ChatColor.RED + "[BadBot] Vous n'avez pas les permissions necessaires");
+						p.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Vous n'avez pas les permissions necessaires");
 						return true;
 					}
 				}
@@ -118,7 +118,7 @@ public class BadBot extends JavaPlugin implements Listener {
 					for(String grosMot : blackList){
 						if((messageTab[i].toLowerCase()).equals(grosMot.toLowerCase())){
 							player.kickPlayer("[BadBot] Language");
-							Bukkit.getServer().broadcastMessage(ChatColor.RED + "[BadBot] " + player.getName() + " kick pour language");
+							Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "[BadBot] "+ ChatColor.RED + player.getName() + " kick pour language");
 						}
 					}
 				}
@@ -138,7 +138,7 @@ public class BadBot extends JavaPlugin implements Listener {
 				}
 				else{
 					e.setCancelled(true);
-					player.sendMessage(ChatColor.RED + "[BadBot] Attendez "+interval+" secondes avant d'envoyer le meme message !");
+					player.sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Attendez "+interval+" secondes avant d'envoyer le meme message !");
 				}
 			}
 		}
@@ -152,7 +152,7 @@ public class BadBot extends JavaPlugin implements Listener {
                 event.setCancelled(false);
             } else {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.RED + "[BadBot] Le chat a ete mute");
+                event.getPlayer().sendMessage(ChatColor.YELLOW + "[BadBot]"+ ChatColor.RED +" Le chat a ete mute");
             }
         }
     }
